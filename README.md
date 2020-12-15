@@ -1,2 +1,2 @@
 # easyaws
-Classes to make your aws code easyier.
+Classes to make your aws code easier.
