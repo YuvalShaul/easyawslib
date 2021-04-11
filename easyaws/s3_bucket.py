@@ -8,6 +8,7 @@ class S3Bucket:
         confdata = util.get_conf()
         aws_access_key_id = aws_access_key_id or confdata['access_key_id']
         aws_secret_access_key = aws_secret_access_key or confdata['secret_access_key']
+        region = region or confdata['region']
 
         self.s3_client = boto3.client('s3', aws_access_key_id=aws_access_key_id,
                                       aws_secret_access_key=aws_secret_access_key,
@@ -30,7 +31,8 @@ class S3Bucket:
         return f's3://{self.bucket_name}/'
 
     def get_S3_bucket(self):
-        bucket_names = [bucket['Name'] for bucket in self.get_other_buckets()[0]]
+        other_buckets = self.get_other_buckets()
+        bucket_names = [bucket['Name'] for bucket in other_buckets[0]]
         if self.bucket_name in bucket_names:
             return
 
@@ -50,11 +52,11 @@ class S3Bucket:
                     "Sid": "Allow All",
                     "Effect": "Allow",
                     "Principal": "*",
-                    "Resource": "*",
+                    # "Resource": "*",
                     "Action": [
                         "s3:*"
                     ],
-                    "Resource": "arn:aws:s3:::bignet-eu-central-1/*"
+                    "Resource": f"arn:aws:s3:::{self.bucket_name}/*"
                 }
             ]
         }
@@ -73,10 +75,11 @@ class S3Bucket:
         return bucket_list, bucket_owner
 
 
+
 if __name__ == '__main__':
-    my_s3 = S3Bucket(bucket_name='my-first-bucket-84629694625', region='eu-central-1')
+    my_s3 = S3Bucket(bucket_name='my-first-bucket-84629694625')
     my_s3.get_S3_bucket()
-    # my_s3.set_policy()
+    my_s3.set_policy()
     buckets = my_s3.get_other_buckets()
     url = my_s3.get_bucket_file_url('file1.txt')
     print(my_s3.s3_client.meta.endpoint_url)
