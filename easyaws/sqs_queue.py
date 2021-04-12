@@ -1,7 +1,6 @@
 import json
 import boto3
 import util
-import re
 
 
 class SQSQueue:
