@@ -36,8 +36,49 @@ class SQSQueue:
         except:
             return []
 
+    def get_queue_url(self, queue_name):
+        response = self.sqs_client.get_queue_url(
+            QueueName=queue_name,
+        )
+        return response["QueueUrl"]
+
+    def send_message(self,msg, q_url):
+        response = self.sqs_client.send_message(
+            QueueUrl=q_url,
+            MessageBody=json.dumps(msg)
+        )
+        return response
+
+    def receive_and_delete_message(self, q_url):
+        response1 = self.sqs_client.receive_message(
+            QueueUrl=q_url,
+            MaxNumberOfMessages=1,
+            WaitTimeSeconds=10,
+        )
+        messages = response1.get('Messages', [])
+
+        for m in messages:
+            response2 = self.sqs_client.delete_message(
+                QueueUrl=q_url,
+                ReceiptHandle=m['ReceiptHandle']
+            )
+
+        return messages
+
+
+
+
+
 if __name__ == '__main__':
-    my_sqs = SQSQueue(queue_name='test1')
-    q = my_sqs.get_SQS_queue()
+    my_sqs = SQSQueue(queue_name='test1')   # So this is the queue name I want
+    my_sqs.get_SQS_queue()              # Create it, or make sure it exist
+    q_url = my_sqs.get_queue_url('test1')
+    print(q_url)
+    msg = {"name": "Dave"}
+    response = my_sqs.send_message(msg, q_url)
+    msgs = my_sqs.receive_and_delete_message(q_url)
+    print(msgs)
+
+
 
 
