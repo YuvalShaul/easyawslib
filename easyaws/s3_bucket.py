@@ -29,7 +29,15 @@ class S3Bucket:
 
     def list_all_files(self):
         response = self.s3_client.list_objects(Bucket=self.bucket_name)
-        return response['Contents']
+        if 'Contents' in response:
+            return response['Contents']
+        else:
+            return []
+
+    def delete_all_files(self):
+        all_files = self.list_all_files()
+        for fname in all_files:
+            response = self.s3_client.delete_object(Bucket=self.bucket_name,Key=fname['Key'])
 
     def get_bucket_s3_uri(self):
         return f's3://{self.bucket_name}/'
@@ -83,6 +91,11 @@ class S3Bucket:
         bucket_owner = ans['Owner']
         return bucket_list, bucket_owner
 
+    def delete_bucket(self):
+        response = self.s3_client.delete_bucket(Bucket=self.bucket_name)
+        return response
+
+
 
 
 if __name__ == '__main__':
@@ -93,6 +106,8 @@ if __name__ == '__main__':
     # url = my_s3.get_bucket_file_url('file1.txt')
     # print(my_s3.s3_client.meta.endpoint_url)
     all_files = my_s3.list_all_files()
+    my_s3.delete_all_files()
+    response = my_s3.delete_bucket()
     print(all)
 
 
