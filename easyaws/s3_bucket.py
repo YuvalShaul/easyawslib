@@ -1,6 +1,6 @@
 import json
 import boto3
-import util
+import easyaws.util
 
 
 class S3Bucket:

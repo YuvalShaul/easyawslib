@@ -1,5 +1,5 @@
 import boto3
-import util
+import easyaws.util
 import requests
 
 
