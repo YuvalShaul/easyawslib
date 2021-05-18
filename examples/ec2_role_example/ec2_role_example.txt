@@ -1,0 +1,19 @@
+EC2 role example
+
+1 - Create an S3 instance
+    - make it accessible
+
+2 - Create an S3 read-all role
+
+3 - Create an EC2 instance
+    - assign an external IP address
+    - assign the role to the instance
+
+4- install git on instance
+    sudo yum install git
+    git --version
+
+5 - Clone the following repository:
+    git clone https://github.com/YuvalShaul/easyawslib.git
+
+6 - 
