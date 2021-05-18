@@ -16,4 +16,4 @@ EC2 role example
 5 - Clone the following repository:
     git clone https://github.com/YuvalShaul/easyawslib.git
 
-6 - 
+6 -
