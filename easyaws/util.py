@@ -1,7 +1,7 @@
 import json
 
 
-def get_conf():
+def get_conf(conf_file):
     try:
         with open('easyaws_conf.json', 'r') as credfile:
             confdata = json.load(credfile)

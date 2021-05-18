@@ -1,10 +1,10 @@
 import boto3
 import util
+import requests
 
 
 class Ec2Tool:
-    def __init__(self, aws_access_key_id=None, aws_secret_access_key=None, region=None):
-        confdata = util.get_conf()
+    def __init__(self, aws_access_key_id, aws_secret_access_key, region):
         aws_access_key_id = aws_access_key_id or confdata['access_key_id']
         aws_secret_access_key = aws_secret_access_key or confdata['secret_access_key']
         region = region or confdata['region']
@@ -52,8 +52,17 @@ class Ec2Tool:
         #     Filters=[{'Name': 'tag:Name', 'Values': [name]}])
         # print(response)
 
+    @staticmethod
+    def get_credentials():
+        res = requests.get('http://169.254.169.254/latest/meta-data/iam/info')
+        role_name = json.loads(res.text)['InstanceProfileArn'].split('/')[-1]
+        res = requests.get('http://169.254.169.254/latest/meta-data/iam/security-credentials/' + role_name)
+        cred = json.loads(res.text)
+        return cred['AccessKeyId'], cred['SecretAccessKey']
+
 
 if __name__ == '__main__':
+    # confdata = util.get_conf('easyaws')
     my_ec2_tool = Ec2Tool()
     response = my_ec2_tool.find_AMI_image(images=['ami-0742b4e673072066f'])
     print(response)
