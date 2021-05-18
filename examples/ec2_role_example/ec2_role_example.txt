@@ -8,12 +8,17 @@ EC2 role example
 3 - Create an EC2 instance
     - assign an external IP address
     - assign the role to the instance
+    add this script:
+        sudo yum install git
+        git clone https://github.com/YuvalShaul/easyawslib.git
+        export PYTHONPATH=~/easyawslib
+        python3 -m pip install virtualenv
+        cd easyawslib
+        virtualenv venv
+        sudo python3 -m pip install -r requirements.txt
 
-4- install git on instance
-    sudo yum install git
-    git --version
+
 
 5 - Clone the following repository:
-    git clone https://github.com/YuvalShaul/easyawslib.git
 
 6 -
