@@ -1,6 +1,7 @@
 import boto3
 import easyaws.util
 import requests
+import json
 
 
 class Ec2Tool:
