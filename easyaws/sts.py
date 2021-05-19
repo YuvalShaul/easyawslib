@@ -3,12 +3,7 @@ import boto3
 
 
 class STS:
-    def __init__(self, aws_access_key_id=None, aws_secret_access_key=None, region=None):
-        confdata = util.get_conf()
-        aws_access_key_id = aws_access_key_id or confdata['access_key_id']
-        aws_secret_access_key = aws_secret_access_key or confdata['secret_access_key']
-        region = region or confdata['region']
-
+    def __init__(self, aws_access_key_id, aws_secret_access_key, region):
         self.sts_client = boto3.client('sts', aws_access_key_id=aws_access_key_id,
                                       aws_secret_access_key=aws_secret_access_key,
                                       region_name=region)
