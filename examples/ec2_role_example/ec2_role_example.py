@@ -27,7 +27,10 @@ def do_all():
     region = 'us-east-1'
     aws_access_key_id, aws_secret_access_key = get_metadata_creds()
     role_arn = get_metadata_role_arn()
-    use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region=region)
+    try:
+        use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region=region)
+    except:
+        print('Creds not good!!!')
     print('=*' * 30)
     creds = get_sts_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
                                 region=region, role_arn=role_arn)
