@@ -1,6 +1,5 @@
 import json
 import boto3
-import util
 
 
 class STS:
