@@ -11,5 +11,5 @@ class STS:
         self.region = region
 
     def assume_role(self, RoleArn, RoleSessionName):
-        response = self.sts_client.assume_role(RoleArn, RoleSessionName)
+        response = self.sts_client.assume_role(RoleArn=RoleArn, RoleSessionName=RoleSessionName)
         return response['Credentials']
