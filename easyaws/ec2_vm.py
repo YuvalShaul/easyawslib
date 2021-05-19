@@ -61,6 +61,12 @@ class Ec2Tool:
         cred = json.loads(res.text)
         return cred['AccessKeyId'], cred['SecretAccessKey']
 
+    @staticmethod
+    def get_role():
+        res = requests.get('http://169.254.169.254/latest/meta-data/iam/info')
+        role_arn = json.loads(res.text)['InstanceProfileArn']
+        return role_arn
+
 
 if __name__ == '__main__':
     # confdata = util.get_conf('easyaws')
