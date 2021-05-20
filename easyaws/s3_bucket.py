@@ -6,8 +6,6 @@ import easyaws.util
 class S3Bucket:
     def __init__(self, bucket_name, aws_access_key_id=None, aws_secret_access_key=None, region=None):
 
-        region = region or confdata['region']
-
         self.s3_client = boto3.client('s3', aws_access_key_id=aws_access_key_id,
                                       aws_secret_access_key=aws_secret_access_key,
                                       region_name=region)
@@ -100,6 +98,7 @@ if __name__ == '__main__':
     confdata = util.get_conf()
     aws_access_key_id = aws_access_key_id or confdata['access_key_id']
     aws_secret_access_key = aws_secret_access_key or confdata['secret_access_key']
+    region = region or confdata['region']
 
     my_s3 = S3Bucket(bucket_name='my-first-bucket-84629694625',aws_access_key_id= aws_access_key_id,
                         aws_secret_access_key= aws_secret_access_key, region='us-east-1')
