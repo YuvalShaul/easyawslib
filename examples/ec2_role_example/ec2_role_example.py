@@ -4,7 +4,7 @@ from easyaws.sts import STS
 
 def get_metadata_creds():
     creds = Ec2Tool.get_credentials()
-    print('credentials:', creds)
+    print('metadata credentials:', creds)
     return creds
 
 def get_metadata_role_arn():
@@ -19,7 +19,8 @@ def use_s3_with_credentials(aws_access_key_id, aws_secret_access_key, region):
     return ans
 
 def get_sts_credentials(aws_access_key_id, aws_secret_access_key, token, region, role_arn):
-    my_sts = STS(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, token=token, region=region)
+    my_sts = STS(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
+                 token=token, region=region)
     creds = my_sts.assume_role(RoleArn=role_arn, RoleSessionName='abcde')
     return creds
 
@@ -28,9 +29,11 @@ def do_all():
     aws_access_key_id, aws_secret_access_key, token = get_metadata_creds()
     role_arn = get_metadata_role_arn()
     try:
-        use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region=region)
-    except:
-        print('Creds not good!!!')
+        use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
+                                token=token, region=region)
+
+    except Exception as e:
+        print('Creds not good!!!', e)
     print('=*' * 30)
     creds = get_sts_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
                                 token=token, region=region, role_arn=role_arn)
