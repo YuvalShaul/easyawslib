@@ -12,7 +12,7 @@ def get_metadata_role_arn():
     print('role arn: ', role_arn)
     return role_arn
 
-def use_s3_with_credentials(aws_access_key_id, aws_secret_access_key, region):
+def use_s3_with_credentials(aws_access_key_id, aws_secret_access_key, Token, region):
     my_s3 = S3Bucket(bucket_name='my-first-bucket-84629694625', aws_access_key_id=aws_access_key_id,
                      aws_secret_access_key=aws_secret_access_key, region=region)
     ans = my_s3.s3_client.list_buckets()
@@ -30,7 +30,7 @@ def do_all():
     role_arn = get_metadata_role_arn()
     try:
         use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
-                                token=token, region=region)
+                                Token=token, region=region)
 
     except Exception as e:
         print('Creds not good!!!', e)
