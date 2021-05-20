@@ -4,7 +4,7 @@ import easyaws.util
 
 
 class S3Bucket:
-    def __init__(self, bucket_name, aws_access_key_id, aws_secret_access_key, region):
+    def __init__(self, bucket_name, aws_access_key_id=None, aws_secret_access_key=None, region=None):
 
         region = region or confdata['region']
 
