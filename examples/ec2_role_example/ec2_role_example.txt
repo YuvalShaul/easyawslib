@@ -5,10 +5,9 @@ EC2 role example
 
 2 - Create an S3 read-all role
 
-3 - Create an EC2 instance
-    - assign an external IP address
-    - assign the role to the instance
-    add this script:
+3 - Create an EC2 instance (should have an external IP address)
+    assign the role to the instance
+    add this script to the :
 ===========================================================================
 #!/bin/bash
 echo "export PYTHONPATH=~/easyawslib" >> /home/ec2-user/.bashrc
@@ -23,6 +22,11 @@ sudo python3 -m pip install -r requirements.txt
 
 
 
-5 - Clone the following repository:
+5 - When the instance runs, clone the following repository into it:
+    https://github.com/YuvalShaul/easyawslib.git
 
-6 -
+6 - You can now run the example:
+    - go to /home/ec2-user/easyawslib/examples/ec2_role_example
+    - run:
+        python3 ec2_role_example.py
+        
