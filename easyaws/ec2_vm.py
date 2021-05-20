@@ -59,7 +59,7 @@ class Ec2Tool:
         role_name = json.loads(res.text)['InstanceProfileArn'].split('/')[-1]
         res = requests.get('http://169.254.169.254/latest/meta-data/iam/security-credentials/' + role_name)
         cred = json.loads(res.text)
-        return cred['AccessKeyId'], cred['SecretAccessKey']
+        return cred['AccessKeyId'], cred['SecretAccessKey'], cred['Token']
 
     @staticmethod
     def get_role():

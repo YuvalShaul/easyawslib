@@ -18,14 +18,14 @@ def use_s3_with_credentials(aws_access_key_id, aws_secret_access_key, region):
     ans = my_s3.s3_client.list_buckets()
     return ans
 
-def get_sts_credentials(aws_access_key_id, aws_secret_access_key, region, role_arn):
-    my_sts = STS(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region=region)
+def get_sts_credentials(aws_access_key_id, aws_secret_access_key, token, region, role_arn):
+    my_sts = STS(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, token=token, region=region)
     creds = my_sts.assume_role(RoleArn=role_arn, RoleSessionName='abcde')
     return creds
 
 def do_all():
     region = 'us-east-1'
-    aws_access_key_id, aws_secret_access_key = get_metadata_creds()
+    aws_access_key_id, aws_secret_access_key, token = get_metadata_creds()
     role_arn = get_metadata_role_arn()
     try:
         use_s3_with_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region=region)
@@ -33,7 +33,7 @@ def do_all():
         print('Creds not good!!!')
     print('=*' * 30)
     creds = get_sts_credentials(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
-                                region=region, role_arn=role_arn)
+                                token=token, region=region, role_arn=role_arn)
     print('STS creds: ', creds)
 
 do_all()
